@@ -1,0 +1,347 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#0b1220">
+
+    <title>Edit Transaction | NexaSpend</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+</head>
+
+<body>
+
+    <div class="app-layout">
+
+        <!-- Mobile Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+
+            <button
+                class="sidebar-close"
+                id="sidebar-close"
+                type="button"
+                aria-label="Close navigation menu"
+            >
+                <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>
+
+            <a href="{{ url_for('index') }}" class="brand">
+                <span class="brand-icon">N</span>
+                <span>Nexa<span class="brand-highlight">Spend</span></span>
+            </a>
+
+            <div class="sidebar-label">MENU</div>
+
+            <nav class="sidebar-nav">
+
+                <a href="{{ url_for('index') }}" class="nav-link">
+                    <svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                    Dashboard
+                </a>
+
+                <a href="{{ url_for('index') }}#transactions" class="nav-link">
+                    <span class="nav-icon">↔</span>
+                    Transactions
+                </a>
+
+                <a href="{{ url_for('index') }}#add-transaction" class="nav-link">
+                    <span class="nav-icon">＋</span>
+                    Add Transaction
+                </a>
+
+            </nav>
+
+
+            <div class="sidebar-bottom">
+
+                <div class="sidebar-tip">
+                    <span class="tip-icon">✦</span>
+
+                    <h3>Smart money habits</h3>
+
+                    <p>
+                        Keep track of your spending and make every
+                        naira count.
+                    </p>
+                </div>
+
+                <p class="sidebar-version">
+                    STUDENT EXPENSE MANAGER
+                </p>
+
+            </div>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+
+            <!-- Topbar -->
+            <header class="topbar">
+
+                <div class="topbar-left">
+
+                    <button
+                        class="menu-toggle"
+                        id="menu-toggle"
+                        type="button"
+                        aria-label="Open navigation menu"
+                        aria-expanded="false"
+                    >
+                        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+                    </button>
+
+                    <div>
+                        <p class="topbar-greeting">
+                            TRANSACTION MANAGEMENT
+                        </p>
+
+                        <h1>Edit Transaction</h1>
+                    </div>
+
+                </div>
+
+
+                <div class="topbar-right">
+
+                    <button
+                        class="theme-toggle"
+                        id="theme-toggle"
+                        type="button"
+                        aria-label="Switch to light theme"
+                        title="Switch theme"
+                    >
+                        <svg id="theme-icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+                    </button>
+
+                    <div class="profile-avatar">S</div>
+
+                    <div class="profile-info">
+                        <strong>Student</strong>
+                        <span>Personal account</span>
+                    </div>
+
+                </div>
+
+            </header>
+
+
+
+            <!-- Edit Transaction Form -->
+            <section class="content-card form-card">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2>Update Transaction Details</h2>
+
+                        <p>
+                            Make changes to your existing transaction.
+                        </p>
+                    </div>
+
+                    <span class="form-heading-icon">✎</span>
+
+                </div>
+
+
+                <form
+                    action="{{ url_for('edit_transaction', transaction_id=transaction['id']) }}"
+                    method="POST"
+                    class="transaction-form"
+                >
+
+                    <div class="form-grid">
+
+
+                        <!-- Transaction Title -->
+                        <div class="form-group">
+
+                            <label for="title">
+                                Transaction Title
+                            </label>
+
+                            <input
+                                type="text"
+                                id="title"
+                                name="title"
+                                value="{{ transaction['title'] }}"
+                                maxlength="100"
+                                placeholder="e.g. Food, Transport..."
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <!-- Amount -->
+                        <div class="form-group">
+
+                            <label for="amount">
+                                Amount (₦)
+                            </label>
+
+                            <input
+                                type="number"
+                                id="amount"
+                                name="amount"
+                                value="{{ transaction['amount'] }}"
+                                min="0.01"
+                                step="0.01"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <!-- Transaction Type -->
+                        <div class="form-group">
+
+                            <label for="type">
+                                Transaction Type
+                            </label>
+
+                            <select id="type" name="type" required>
+
+                                <option
+                                    value="income"
+                                    {% if transaction['type'] == 'income' %}selected{% endif %}
+                                >
+                                    Income
+                                </option>
+
+                                <option
+                                    value="expense"
+                                    {% if transaction['type'] == 'expense' %}selected{% endif %}
+                                >
+                                    Expense
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- Category -->
+                        <div class="form-group">
+
+                            <label for="category">
+                                Category
+                            </label>
+
+                            <input
+                                type="text"
+                                id="category"
+                                name="category"
+                                value="{{ transaction['category'] }}"
+                                maxlength="50"
+                                placeholder="e.g. Food, Education..."
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <!-- Date -->
+                        <div class="form-group">
+
+                            <label for="date">
+                                Transaction Date
+                            </label>
+
+                            <input
+                                type="date"
+                                id="date"
+                                name="date"
+                                value="{{ transaction['date'] }}"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <!-- Notes -->
+                        <div class="form-group full-width">
+
+                            <label for="notes">
+                                Notes <span>(Optional)</span>
+                            </label>
+
+                            <textarea
+                                id="notes"
+                                name="notes"
+                                rows="4"
+                                placeholder="Add any additional details..."
+                            >{{ transaction['notes'] or '' }}</textarea>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+
+                        <a
+                            href="{{ url_for('index') }}"
+                            class="secondary-button"
+                        >
+                            Cancel
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="primary-button"
+                        >
+                            Update Transaction →
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+
+
+            <!-- Footer -->
+            <footer class="footer">
+                <p>
+                    NexaSpend · Manage your money smarter.
+                </p>
+            </footer>
+
+
+        </main>
+
+    </div>
+
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>

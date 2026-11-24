@@ -1,0 +1,1546 @@
+
+/* =========================================
+   NEXASPEND — PREMIUM FINTECH DESIGN
+   Dark + Light Themes
+========================================= */
+
+
+/* 1. THEME VARIABLES */
+
+:root {
+    color-scheme: dark;
+
+    --background: #080f1e;
+    --sidebar: #0c1628;
+    --surface: #101d32;
+    --surface-secondary: #14223a;
+    --surface-hover: #192a44;
+    --input-background: #0b1729;
+
+    --border: rgba(148, 163, 184, 0.13);
+    --border-strong: rgba(148, 163, 184, 0.22);
+
+    --primary: #4f8cff;
+    --primary-hover: #3678ed;
+    --primary-light: rgba(79, 140, 255, 0.13);
+    --primary-glow: rgba(79, 140, 255, 0.2);
+
+    --text: #f1f5fb;
+    --text-secondary: #a1b0c5;
+    --text-muted: #718198;
+
+    --green: #34d399;
+    --red: #fb7185;
+    --yellow: #fbbf24;
+
+    --shadow: 0 15px 40px rgba(0, 0, 0, 0.16);
+    --card-shadow: 0 5px 20px rgba(0, 0, 0, 0.10);
+
+    --radius: 17px;
+    --radius-small: 11px;
+
+    --transition: 0.22s ease;
+}
+
+:root[data-theme="light"] {
+    color-scheme: light;
+
+    --background: #f4f7fc;
+    --sidebar: #ffffff;
+    --surface: #ffffff;
+    --surface-secondary: #f7f9fd;
+    --surface-hover: #edf3fc;
+    --input-background: #f8faff;
+
+    --border: rgba(30, 55, 90, 0.10);
+    --border-strong: rgba(30, 55, 90, 0.18);
+
+    --primary: #3478ed;
+    --primary-hover: #2465d5;
+    --primary-light: rgba(52, 120, 237, 0.10);
+    --primary-glow: rgba(52, 120, 237, 0.14);
+
+    --text: #17243a;
+    --text-secondary: #52627a;
+    --text-muted: #8996aa;
+
+    --green: #059669;
+    --red: #e34e69;
+    --yellow: #d97706;
+
+    --shadow: 0 15px 40px rgba(30, 55, 90, 0.07);
+    --card-shadow: 0 5px 20px rgba(30, 55, 90, 0.045);
+}
+
+
+/* 2. RESET AND GLOBAL STYLES */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    scroll-padding-top: 30px;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: var(--background);
+    color: var(--text);
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.6;
+    transition:
+        background var(--transition),
+        color var(--transition);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+img {
+    max-width: 100%;
+}
+
+::selection {
+    color: white;
+    background: var(--primary);
+}
+
+
+/* 3. MAIN LAYOUT */
+
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* 4. SIDEBAR */
+
+.sidebar {
+    width: 238px;
+    min-width: 238px;
+    height: 100vh;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 24px 16px;
+
+    background: var(--sidebar);
+    border-right: 1px solid var(--border);
+
+    transition:
+        background var(--transition),
+        border-color var(--transition),
+        transform 0.28s ease;
+}
+
+.sidebar-close {
+    display: none;
+}
+
+.sidebar,
+.table-wrapper,
+.main-content,
+.dashboard-section,
+.content-card {
+    min-width: 0;
+}
+
+body.drawer-open {
+    overflow: hidden;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 42px;
+
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.9px;
+}
+
+.brand-icon {
+    width: 36px;
+    height: 36px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 11px;
+
+    background: linear-gradient(135deg, #5b9bff, #2867dc);
+    color: #ffffff;
+
+    font-size: 18px;
+    font-weight: 600;
+
+    box-shadow: 0 7px 18px rgba(59, 130, 246, 0.28);
+}
+
+.brand-highlight {
+    color: var(--primary);
+}
+
+.sidebar-label {
+    margin: 0 0 14px 12px;
+
+    color: var(--text-muted);
+
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    padding: 9px 12px;
+
+    color: var(--text-secondary);
+
+    border: 1px solid transparent;
+    border-radius: 11px;
+
+    font-size: 12.5px;
+    font-weight: 500;
+
+    transition: var(--transition);
+}
+
+.nav-link:hover {
+    color: var(--text);
+    background: var(--surface-hover);
+}
+
+.nav-link.active {
+    color: var(--primary);
+    background: var(--primary-light);
+    border-color: var(--primary-glow);
+}
+
+.nav-icon {
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.sidebar-close svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+}
+
+.sidebar-tip {
+    padding: 14px;
+
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    background: linear-gradient(
+        145deg,
+        var(--primary-light),
+        transparent
+    );
+}
+
+.tip-icon {
+    color: var(--primary);
+    font-size: 17px;
+}
+
+.sidebar-tip h3 {
+    margin: 6px 0 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.sidebar-tip p {
+    color: var(--text-secondary);
+    font-size: 11px;
+    line-height: 1.55;
+}
+
+.sidebar-version {
+    margin-top: 16px;
+
+    color: var(--text-muted);
+
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+
+/* 5. MAIN CONTENT */
+
+.main-content {
+    width: calc(100% - 238px);
+    min-width: 0;
+
+    margin-left: 238px;
+    padding: 0 34px;
+
+    transition: background var(--transition);
+}
+
+
+/* 6. TOPBAR */
+
+.topbar {
+    min-height: 78px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    margin-bottom: 24px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.topbar-left,
+.topbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.topbar-left {
+    gap: 15px;
+}
+
+.topbar-greeting {
+    color: var(--text-muted);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+}
+
+.topbar h1 {
+    font-size: 20px;
+    letter-spacing: -0.8px;
+    font-weight: 600;
+}
+
+.topbar-right {
+    gap: 13px;
+}
+
+.profile-avatar {
+    width: 36px;
+    height: 36px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    color: white;
+    background: linear-gradient(135deg, #5b9bff, #2867dc);
+
+    font-weight: 600;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-info strong {
+    font-size: 11.5px;
+    font-weight: 600;
+}
+
+.profile-info span {
+    color: var(--text-muted);
+    font-size: 10px;
+}
+
+
+/* 7. MOBILE MENU BUTTON */
+
+.menu-toggle {
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 42px;
+    height: 42px;
+
+    color: var(--text);
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition),
+        transform var(--transition);
+}
+
+.menu-toggle svg,
+.theme-toggle svg,
+.primary-button svg,
+.secondary-button svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.menu-toggle:hover {
+    background: var(--surface-hover);
+}
+
+.menu-toggle:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
+
+
+/* 8. THEME SWITCHER */
+
+.theme-toggle {
+    width: 36px;
+    height: 36px;
+
+    display: inline-grid;
+    place-items: center;
+
+    color: var(--text-secondary);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    transition: var(--transition);
+}
+
+.theme-toggle:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+    background: var(--primary-light);
+    transform: translateY(-2px);
+}
+
+
+/* 9. DASHBOARD */
+
+.dashboard-section {
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+}
+
+
+/* 10. WELCOME SECTION */
+
+.welcome-section {
+    position: relative;
+    overflow: hidden;
+
+    min-height: 156px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+
+    padding: 28px;
+    margin-bottom: 20px;
+
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(8, 17, 36, 0.97) 0%,
+            rgba(8, 17, 36, 0.84) 55%,
+            rgba(8, 17, 36, 0.58) 100%
+        ),
+        url("https://images.unsplash.com/photo-1751200065687-a126e7c304da?auto=format&fit=crop&w=2000&q=85")
+        center/cover no-repeat;
+
+    box-shadow: var(--shadow);
+}
+
+.welcome-section h2 {
+    color: #ffffff;
+    font-size: clamp(19px, 2vw, 22px);
+    letter-spacing: -0.8px;
+}
+
+.welcome-section p {
+    max-width: 450px;
+    margin-top: 6px;
+
+    color: #cbd5e1;
+    font-size: 12px;
+}
+
+
+/* 11. BUTTONS */
+
+.primary-button,
+.secondary-button {
+    min-height: 38px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    padding: 0 15px;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition),
+        border-color var(--transition),
+        transform var(--transition),
+        box-shadow var(--transition);
+}
+
+.primary-button {
+    color: #ffffff;
+    background: linear-gradient(135deg, #5595ff, #3474e8);
+    border: 1px solid transparent;
+
+    box-shadow: 0 5px 15px rgba(52, 120, 237, 0.19);
+}
+
+.primary-button:hover {
+    background: linear-gradient(135deg, #4385f4, #2865d6);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(52, 120, 237, 0.25);
+}
+
+.secondary-button {
+    color: var(--text);
+    background: var(--surface-hover);
+    border: 1px solid var(--border);
+}
+
+.secondary-button:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--primary-glow);
+    outline-offset: 3px;
+}
+
+
+/* 12. SUMMARY CARDS */
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+
+    margin-bottom: 20px;
+}
+
+.summary-card {
+    min-width: 0;
+
+    padding: 18px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    box-shadow: var(--card-shadow);
+
+    transition:
+        transform var(--transition),
+        border-color var(--transition),
+        background var(--transition);
+}
+
+.summary-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-3px);
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-label {
+    color: var(--text-secondary);
+    font-size: 11.5px;
+    font-weight: 500;
+}
+
+.card-icon {
+    width: 34px;
+    height: 34px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 10px;
+
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.income-icon {
+    color: var(--green);
+    background: rgba(52, 211, 153, 0.12);
+}
+
+.expense-icon {
+    color: var(--red);
+    background: rgba(251, 113, 133, 0.12);
+}
+
+.balance-icon {
+    color: var(--primary);
+    background: var(--primary-light);
+}
+
+.summary-card h3 {
+    margin: 14px 0 3px;
+
+    font-size: clamp(18px, 1.8vw, 23px);
+    font-weight: 600;
+    letter-spacing: -0.9px;
+
+    overflow-wrap: anywhere;
+}
+
+.card-description {
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
+.balance-card {
+    background: linear-gradient(
+        140deg,
+        rgba(47, 108, 197, 0.17),
+        var(--surface) 80%
+    );
+
+    border-color: rgba(79, 140, 255, 0.25);
+}
+
+
+/* 13. CONTENT CARDS */
+
+.content-card {
+    padding: 20px;
+    margin-bottom: 20px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    box-shadow: var(--card-shadow);
+
+    transition:
+        background var(--transition),
+        border-color var(--transition);
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+
+    margin-bottom: 17px;
+}
+
+.section-heading h2 {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.4px;
+}
+
+.section-heading p {
+    margin-top: 3px;
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
+.transaction-count {
+    padding: 6px 11px;
+
+    color: var(--primary);
+    background: var(--primary-light);
+
+    border-radius: 20px;
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.form-heading-icon {
+    width: 34px;
+    height: 34px;
+
+    display: grid;
+    place-items: center;
+
+    color: var(--primary);
+    background: var(--primary-light);
+
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+
+/* 14. CHARTS */
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    height: 230px;
+}
+
+.chart-empty {
+    min-height: 160px;
+
+    display: grid;
+    place-items: center;
+
+    color: var(--text-muted);
+    font-size: 12px;
+    text-align: center;
+}
+
+
+/* 15. TRANSACTIONS TABLE */
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+
+    border-radius: 10px;
+}
+
+.transactions-table {
+    width: 100%;
+    min-width: 620px;
+
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+.transactions-table th {
+    padding: 11px 10px;
+
+    color: var(--text-muted);
+    background: var(--surface-secondary);
+
+    border-bottom: 1px solid var(--border);
+
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.9px;
+    text-align: left;
+}
+
+.transactions-table td {
+    padding: 12px 10px;
+
+    border-bottom: 1px solid var(--border);
+
+    font-size: 11px;
+}
+
+.transactions-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.transactions-table tbody tr {
+    transition: background var(--transition);
+}
+
+.transactions-table tbody tr:hover {
+    background: var(--surface-hover);
+}
+
+.transaction-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.transaction-name strong {
+    font-size: 11.5px;
+    font-weight: 500;
+}
+
+.transaction-symbol {
+    width: 30px;
+    height: 30px;
+
+    display: grid;
+    place-items: center;
+
+    color: var(--primary);
+    background: var(--primary-light);
+
+    border-radius: 9px;
+    font-size: 15px;
+}
+
+.category-text,
+.date-text {
+    color: var(--text-secondary);
+}
+
+.type-badge {
+    display: inline-block;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.income-badge {
+    color: var(--green);
+    background: rgba(52, 211, 153, 0.11);
+}
+
+.expense-badge {
+    color: var(--red);
+    background: rgba(251, 113, 133, 0.11);
+}
+
+.amount-income {
+    color: var(--green);
+    font-weight: 600;
+}
+
+.amount-expense {
+    color: var(--red);
+    font-weight: 600;
+}
+
+
+/* 16. EMPTY STATE */
+
+.empty-state {
+    padding: 38px 15px;
+    text-align: center;
+}
+
+.empty-icon {
+    width: 48px;
+    height: 48px;
+
+    display: grid;
+    place-items: center;
+
+    margin: 0 auto 14px;
+
+    color: var(--primary);
+    background: var(--primary-light);
+
+    border-radius: 14px;
+    font-size: 21px;
+}
+
+.empty-state h3 {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.empty-state p {
+    margin-bottom: 17px;
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
+
+/* 17. TRANSACTION FORMS */
+
+.transaction-form {
+    width: 100%;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.form-group {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.form-group label span {
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    max-width: 100%;
+
+    padding: 10px 12px;
+
+    color: var(--text);
+    background: var(--input-background);
+
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+
+    outline: none;
+
+    font-size: 12.5px;
+
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition),
+        background var(--transition);
+}
+
+.form-group input,
+.form-group select {
+    min-height: 40px;
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--text-muted);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+.form-group select {
+    cursor: pointer;
+}
+
+.form-group select option {
+    color: var(--text);
+    background: var(--surface);
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 11px;
+
+    margin-top: 23px;
+    padding-top: 20px;
+
+    border-top: 1px solid var(--border);
+}
+
+
+/* 18. FILTER BUTTONS */
+
+.transaction-filters {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9px;
+
+    margin: 16px 0;
+}
+
+.filter-button {
+    padding: 8px 14px;
+
+    color: var(--text-secondary);
+    background: var(--surface-secondary);
+
+    border: 1px solid var(--border);
+    border-radius: 9px;
+
+    font-size: 11px;
+    font-weight: 500;
+
+    transition: var(--transition);
+}
+
+.filter-button:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.filter-button.active {
+    color: #ffffff;
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+
+/* 19. EDIT AND DELETE ACTIONS */
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.edit-button,
+.delete-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 6px 9px;
+
+    border-radius: 8px;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.edit-button {
+    color: var(--primary);
+    background: var(--primary-light);
+    border: 1px solid var(--primary-glow);
+}
+
+.edit-button:hover {
+    background: var(--primary-glow);
+}
+
+.delete-form {
+    margin: 0;
+}
+
+.delete-button {
+    color: var(--red);
+    background: rgba(251, 113, 133, 0.09);
+    border: 1px solid rgba(251, 113, 133, 0.18);
+}
+
+.delete-button:hover {
+    background: rgba(251, 113, 133, 0.17);
+}
+
+
+/* 20. FOOTER */
+
+.footer {
+    max-width: 1250px;
+
+    margin: 30px auto 20px;
+    padding: 18px 0;
+
+    color: var(--text-muted);
+
+    border-top: 1px solid var(--border);
+
+    font-size: 10px;
+    text-align: center;
+}
+
+
+/* 21. RESPONSIVE NAVIGATION */
+
+/* Tablet and smaller screens */
+@media (max-width: 1050px) {
+
+    .menu-toggle {
+        display: inline-flex;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+
+        width: min(280px, 85vw);
+        min-width: 0;
+
+        height: 100vh;
+        height: 100dvh;
+
+        z-index: 1001;
+
+        transform: translateX(-100%);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+
+        box-shadow: var(--shadow);
+    }
+
+    .sidebar-close {
+        position: absolute;
+        top: 18px;
+        right: 16px;
+
+        width: 38px;
+        height: 38px;
+
+        display: inline-grid;
+        place-items: center;
+
+        color: var(--text);
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+
+        font-size: 24px;
+        line-height: 1;
+        cursor: pointer;
+
+        transition:
+            background var(--transition),
+            color var(--transition),
+            border-color var(--transition);
+    }
+
+    .sidebar-close:hover {
+        color: var(--primary);
+        background: var(--surface-hover);
+        border-color: var(--primary);
+    }
+
+    .sidebar-close:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+    }
+
+    .sidebar .brand {
+        padding-right: 42px;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .sidebar-overlay {
+        display: block;
+
+        position: fixed;
+        inset: 0;
+
+        z-index: 1000;
+
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(3px);
+
+        opacity: 0;
+        visibility: hidden;
+
+        transition:
+            opacity 0.3s ease,
+            visibility 0.3s ease;
+    }
+
+    .sidebar-overlay.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .main-content {
+        width: 100%;
+        margin-left: 0;
+        padding: 0 25px;
+    }
+
+    .summary-grid {
+        gap: 12px;
+    }
+
+    .summary-card {
+        padding: 18px;
+    }
+
+    .content-card {
+        padding: 21px;
+    }
+
+}
+
+
+/* 22. MOBILE RESPONSIVENESS */
+
+@media (max-width: 760px) {
+
+    .main-content {
+        padding: 0 20px;
+    }
+
+    .topbar {
+        min-height: 72px;
+        margin-bottom: 20px;
+    }
+
+    .summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .summary-card {
+        padding: 17px;
+    }
+
+    .summary-card:last-child {
+        grid-column: 1 / -1;
+    }
+
+    .summary-card h3 {
+        font-size: 21px;
+    }
+
+    .welcome-section {
+        min-height: 160px;
+
+        align-items: flex-start;
+        flex-direction: column;
+
+        padding: 22px;
+    }
+
+    .welcome-section .primary-button {
+        width: auto;
+    }
+
+    .content-card {
+        padding: 17px;
+    }
+
+    .chart-container {
+        height: 220px;
+    }
+
+    .action-buttons {
+        gap: 5px;
+    }
+
+    .edit-button,
+    .delete-button {
+        padding: 7px 9px;
+    }
+
+}
+
+
+/* 23. SMALL MOBILE SCREENS */
+
+@media (max-width: 520px) {
+
+    body {
+        font-size: 13px;
+    }
+
+    .main-content {
+        padding: 0 14px;
+    }
+
+    .topbar {
+        min-height: 64px;
+        gap: 8px;
+        margin-bottom: 16px;
+    }
+
+    .topbar-left {
+        gap: 10px;
+    }
+
+    .topbar h1 {
+        font-size: 18px;
+    }
+
+    .topbar-greeting {
+        font-size: 8px;
+    }
+
+    .topbar-right {
+        gap: 8px;
+    }
+
+    .profile-info {
+        display: none;
+    }
+
+    .profile-avatar {
+        width: 35px;
+        height: 35px;
+    }
+
+    .theme-toggle {
+        width: 36px;
+        height: 36px;
+    }
+
+    .menu-toggle {
+        width: 38px;
+        height: 38px;
+        font-size: 19px;
+    }
+
+    .welcome-section {
+        min-height: 150px;
+        padding: 18px;
+        margin-bottom: 16px;
+    }
+
+    .welcome-section h2 {
+        font-size: 20px;
+    }
+
+    .welcome-section p {
+        font-size: 11px;
+    }
+
+    .welcome-section .primary-button {
+        width: 100%;
+    }
+
+    .summary-grid {
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+
+    .summary-card {
+        padding: 14px;
+        border-radius: 14px;
+    }
+
+    .card-label {
+        font-size: 10px;
+    }
+
+    .card-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 16px;
+    }
+
+    .summary-card h3 {
+        margin-top: 12px;
+        font-size: clamp(16px, 4.5vw, 19px);
+    }
+
+    .card-description {
+        font-size: 9px;
+    }
+
+    .content-card {
+        padding: 16px;
+        margin-bottom: 17px;
+        border-radius: 14px;
+    }
+
+    .section-heading {
+        gap: 8px;
+        margin-bottom: 17px;
+    }
+
+    .section-heading h2 {
+        font-size: 14px;
+    }
+
+    .section-heading p {
+        font-size: 10px;
+    }
+
+    .transaction-count {
+        padding: 5px 8px;
+        font-size: 9px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .full-width {
+        grid-column: auto;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .form-actions button,
+    .form-actions a {
+        width: 100%;
+    }
+
+    .transaction-filters {
+        gap: 7px;
+    }
+
+    .filter-button {
+        padding: 8px 12px;
+        font-size: 10px;
+    }
+
+    .chart-container {
+        height: 225px;
+    }
+
+    .footer {
+        margin-top: 20px;
+    }
+
+}
+
+
+/* 24. VERY SMALL SCREENS */
+
+@media (max-width: 360px) {
+
+    .main-content {
+        padding: 0 10px;
+    }
+
+    .topbar h1 {
+        font-size: 16px;
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-card:last-child {
+        grid-column: auto;
+    }
+
+    .summary-card {
+        padding: 17px;
+    }
+
+    .summary-card h3 {
+        font-size: 21px;
+    }
+
+    .welcome-section {
+        padding: 18px;
+    }
+
+    .content-card {
+        padding: 13px;
+    }
+
+}
+
+
+/* 25. ACCESSIBILITY AND MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+}
