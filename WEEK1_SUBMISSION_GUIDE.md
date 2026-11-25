@@ -544,3 +544,23 @@ The repository contains:
 hello@nexavarotech.com
 
 Do not describe the Week 1 submission as fully complete until all outstanding requirements have been completed or the program team has agreed that they may be submitted separately.
+### Automated Testing Results
+
+The application was tested using Python's built-in `unittest` framework.
+
+**Command used:**
+```powershell
+python -m unittest discover -s tests -p "test_*.py" -v
+```
+
+**Result:** 6 tests passed, 0 failures, 0 errors.
+
+The tests covered:
+- Adding valid transactions.
+- Rejecting invalid transaction values.
+- Dashboard totals, filters and chart data.
+- Deleting transactions.
+- Editing transactions.
+- Handling missing transactions with a 404 response.
+
+**Execution time:** 0.237 seconds.
